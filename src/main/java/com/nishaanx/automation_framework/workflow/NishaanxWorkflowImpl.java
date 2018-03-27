@@ -3,6 +3,7 @@ package com.nishaanx.automation_framework.workflow;
 import com.nishaanx.automation_framework.base.DriverFactory;
 import com.nishaanx.automation_framework.data.AddressDetailsInfo;
 import com.nishaanx.automation_framework.data.CommunicationDetailsInfo;
+import com.nishaanx.automation_framework.data.PaymentInfo;
 import com.nishaanx.automation_framework.data.PersonalDetailsInfo;
 import com.nishaanx.automation_framework.data.TermsAndConditionsInfo;
 import com.nishaanx.automation_framework.data.TrainingDetailsInfo;
@@ -11,6 +12,7 @@ import com.nishaanx.automation_framework.pages.web.CommunicationDetailsPage;
 import com.nishaanx.automation_framework.pages.web.HomePage;
 import com.nishaanx.automation_framework.pages.web.LoginPage;
 import com.nishaanx.automation_framework.pages.web.MainAddressPage;
+import com.nishaanx.automation_framework.pages.web.PaymentPage;
 import com.nishaanx.automation_framework.pages.web.PersonalDetailsPage;
 import com.nishaanx.automation_framework.pages.web.ReviewPage;
 import com.nishaanx.automation_framework.pages.web.TermsAndConditionsPage;
@@ -67,11 +69,18 @@ public class NishaanxWorkflowImpl implements NishaanxWorkflows {
 
     @Override
     public TrainingDetailsPage enterMainAddressDetails(MainAddressPage mainAddressPage, AddressDetailsInfo mainAddressInfo) {
-        return mainAddressPage.enterMainAddressLine(mainAddressInfo.getAddressLine())
+        mainAddressPage = mainAddressPage.enterMainAddressLine(mainAddressInfo.getAddressLine())
                 .enterMainAddressTownCity(mainAddressInfo.getTownCity())
                 .enterMainAddressPostcode(mainAddressInfo.getPostCode())
                 .selectMainAddressCountry(mainAddressInfo.getCountry())
-                .clickNext(TrainingDetailsPage.class);
+                .checkisCorrespondenceAddress(mainAddressInfo.isIsCorrespondenceDifferent());
+        if (mainAddressInfo.isIsCorrespondenceDifferent()) {
+            mainAddressPage.enterCorrespondenceAddressLine(mainAddressInfo.getCorrespondenceAddressLine())
+                    .enterCorrespondenceTownCity(mainAddressInfo.getCorrespondenceTownCity())
+                    .enterCorrespondencePostcode(mainAddressInfo.getCorrespondencePostCode())
+                    .selectCorrespondenceCountry(mainAddressInfo.getCorrespondenceCountry());
+        }
+        return mainAddressPage.clickNext(TrainingDetailsPage.class);
     }
 
     @Override
@@ -91,5 +100,14 @@ public class NishaanxWorkflowImpl implements NishaanxWorkflows {
                 .checkOptinForNewsletterFromRcgp(termsAndConditionsInfo.getOptinMemberDirectory())
                 .checkAgreeToTermsAndConditions(termsAndConditionsInfo.getAgreeTermsAndConditions())
                 .clickNext(ReviewPage.class);
+    }
+
+    @Override
+    public PaymentPage enterPaymentDetails(PaymentPage paymentPage, PaymentInfo paymentInfo) {
+        return paymentPage.enterCardNumber(paymentInfo.getCardnumber())
+                .enterMonth(paymentInfo.getExpiryMonth())
+                .enterYear(paymentInfo.getExpiryYear())
+                .enterCvv(paymentInfo.getCvvnumber())
+                .clickSubmit(PaymentPage.class);
     }
 }

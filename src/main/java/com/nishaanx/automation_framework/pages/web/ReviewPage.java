@@ -9,14 +9,14 @@ public class ReviewPage extends BasePage {
     By editMainAddressButton = By.xpath("//div[preceding-sibling::div//legend[text()='Main Address']]//button[contains(text(),'Edit')]");
     By editTrainingDetailsButton = By.xpath("//div[preceding-sibling::div//legend[text()='Training Details']]//button[contains(text(),'Edit')]");
     By editTermsAndConditionsButton = By.xpath("//div[preceding-sibling::div//legend[text()='Terms and Conditions']]//button[contains(text(),'Edit')]");
-    By submitButton = By.xpath("//button//span[text()='Submit']");
+    By submitButton = By.xpath("//li[contains(@style,'display: list-item;')]//button//span[text()='Submit']");
     By previousButton = By.linkText("Back");
     By messageText = By.xpath("//div[@class='pop-up-successMsg' and @style='display: block;']");
-    By nextStepButton = By.xpath("//a//span[contains(text(),'Next Step')]");
+    By nextStepButton = By.xpath("//a[@style='display: inline-block;']//span[contains(text(),'Next Step')]");
 
-    public PersonalDetailsPage clickNextStep() {
+    public PaymentLandingPage clickNextStep() {
         waitForElement(nextStepButton).click();
-        return new PersonalDetailsPage();
+        return new PaymentLandingPage();
     }
 
     public PersonalDetailsPage clickPersonalDetails() {
@@ -29,7 +29,7 @@ public class ReviewPage extends BasePage {
     }
 
     public boolean isMessageTextPresent() {
-        return isElementPresent(submitButton, 15);
+        return isElementPresent(editPersonalDetailsButton, 15);
     }
 
     public CommunicationDetailsPage clickCommunicationDetails() {
@@ -52,7 +52,7 @@ public class ReviewPage extends BasePage {
         return new TermsAndConditionsPage();
     }
 
-    public <T extends BasePage> T clicksubmit(Class<T> clazz) {
+    public <T extends BasePage> T clickSubmit(Class<T> clazz) {
         waitForElement(submitButton).click();
         try {
             return (T) clazz.newInstance();
@@ -61,12 +61,16 @@ public class ReviewPage extends BasePage {
         }
     }
 
-    public <T extends BasePage> T clickprevious(Class<T> clazz) {
+    public <T extends BasePage> T clickPrevious(Class<T> clazz) {
         waitForElement(previousButton).click();
         try {
             return (T) clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException ex) {
             throw new AssertionError("Unable to create a page for the generic class");
         }
+    }
+
+    public boolean isNextStepButtonPresent() {
+        return isElementPresent(nextStepButton, 20);
     }
 }

@@ -7,6 +7,8 @@ import com.nishaanx.automation_framework.pages.web.CommunicationDetailsPage;
 import com.nishaanx.automation_framework.pages.web.HomePage;
 import com.nishaanx.automation_framework.pages.web.LoginPage;
 import com.nishaanx.automation_framework.pages.web.MainAddressPage;
+import com.nishaanx.automation_framework.pages.web.PaymentLandingPage;
+import com.nishaanx.automation_framework.pages.web.PaymentPage;
 import com.nishaanx.automation_framework.pages.web.PersonalDetailsPage;
 import com.nishaanx.automation_framework.pages.web.ReviewPage;
 import com.nishaanx.automation_framework.pages.web.TermsAndConditionsPage;
@@ -47,7 +49,16 @@ public class WebTests extends BaseTests {
         ReviewPage reviewPage = nw.acceptTermsAndConditions(termsAndConditonsPage, workflowInfo.getTermsAndConditionsInfo());
 
         assertTrue(reviewPage.isMessageTextPresent(), "Review page not present!!!");
+        reviewPage = reviewPage.clickSubmit(ReviewPage.class);
 
+        assertTrue(reviewPage.isNextStepButtonPresent(), "Review page not loaded!!!");
+        PaymentLandingPage paymentLandingPage = reviewPage.clickNextStep();
+
+        assertTrue(paymentLandingPage.isNextStepButtonPresent(), "Payment Landing Page is not loaded!!!");
+        PaymentPage paymentPage = paymentLandingPage.clickNextStep(PaymentPage.class);
+
+        assertTrue(paymentPage.isPaymentPageDisplayed(), "Payment Page is not loaded!!!");
+        paymentPage = nw.enterPaymentDetails(paymentPage, workflowInfo.getPaymentInfo());
     }
 
     @DataProvider(name = "testData", parallel = false)

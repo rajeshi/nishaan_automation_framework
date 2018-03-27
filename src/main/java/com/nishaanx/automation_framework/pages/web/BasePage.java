@@ -411,7 +411,7 @@ public class BasePage {
                         try {
                             boolean isPresent = false;
                             if (countElements(by) > 0) {
-                                WebDriverWait wait1 = new WebDriverWait(driver, Configurations.TIME_OUT_SECONDS);
+                                WebDriverWait wait1 = new WebDriverWait(driver, timeOut);
                                 WebElement element = wait1.until(ExpectedConditions.visibilityOfElementLocated(by));
                                 isPresent = element.isDisplayed();
                             }

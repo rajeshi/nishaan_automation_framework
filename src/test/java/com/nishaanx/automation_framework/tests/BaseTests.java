@@ -41,6 +41,6 @@ public class BaseTests extends Assert {
             ImageIO.write(screenshot.getImage(), "PNG", baos);
             FileUtils.writeByteArrayToFile(fileScr, baos.toByteArray());
         }
-        DriverFactory.getDriver().quit();
+        //DriverFactory.getDriver().quit();
     }
 }

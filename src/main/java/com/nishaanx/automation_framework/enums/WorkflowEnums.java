@@ -2,6 +2,7 @@ package com.nishaanx.automation_framework.enums;
 
 import com.nishaanx.automation_framework.data.AddressDetailsInfo;
 import com.nishaanx.automation_framework.data.CommunicationDetailsInfo;
+import com.nishaanx.automation_framework.data.PaymentInfo;
 import com.nishaanx.automation_framework.data.PersonalDetailsInfo;
 import com.nishaanx.automation_framework.data.TermsAndConditionsInfo;
 import com.nishaanx.automation_framework.data.TrainingDetailsInfo;
@@ -50,16 +51,23 @@ public enum WorkflowEnums implements Supplier<WorkflowInfo> {
             termsAndConditionsInfo.setNewsLetterCommunication(true);
             termsAndConditionsInfo.setAgreeTermsAndConditions(true);
 
+            PaymentInfo paymentInfo = new PaymentInfo();
+            paymentInfo.setCardnumber("4111111111111111");
+            paymentInfo.setCvvnumber("298");
+            paymentInfo.setExpiryMonth("09");
+            paymentInfo.setExpiryYear("2019");
+
             workflowInfo.setValidationInfo(validationInfo);
             workflowInfo.setPersonalDetailsInfo(personalDetailsInfo);
             workflowInfo.setCommunicationDetailsInfo(communicationInfo);
             workflowInfo.setMainAddressInfo(addressDetailsInfo);
             workflowInfo.setTrainingDetailsInfo(trainingDetailsInfo);
             workflowInfo.setTermsAndConditionsInfo(termsAndConditionsInfo);
+            workflowInfo.setPaymentInfo(paymentInfo);
             return workflowInfo;
         }
 
-    },
+    }/*,
     AIT_TYPE2_WORKFLOW {
         @Override
         public WorkflowInfo getData() {
@@ -165,8 +173,9 @@ public enum WorkflowEnums implements Supplier<WorkflowInfo> {
             workflowInfo.setMainAddressInfo(addressDetailsInfo);
             workflowInfo.setTrainingDetailsInfo(trainingDetailsInfo);
             workflowInfo.setTermsAndConditionsInfo(termsAndConditionsInfo);
+            workflowInfo.setPaymentInfo(paymentInfo);
             return workflowInfo;
         }
-    }
+    }*/
 
 }

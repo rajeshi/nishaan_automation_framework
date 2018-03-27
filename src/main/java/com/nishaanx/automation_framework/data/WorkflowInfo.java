@@ -8,6 +8,15 @@ public class WorkflowInfo {
     private AddressDetailsInfo mainAddressInfo;
     private TrainingDetailsInfo trainingDetailsInfo;
     private TermsAndConditionsInfo termsAndConditionsInfo;
+    private PaymentInfo paymentInfo;
+
+    public PaymentInfo getPaymentInfo() {
+        return paymentInfo;
+    }
+
+    public void setPaymentInfo(PaymentInfo paymentInfo) {
+        this.paymentInfo = paymentInfo;
+    }
 
     public ValidationInfo getValidationInfo() {
         return validationInfo;
