@@ -68,6 +68,8 @@ public class ExtentReportListener implements IReporter{
                 File file = new File("");
                 if (result.getStatus() == ITestResult.FAILURE) {
                     test.log(LogStatus.FAIL, "Click on the snapshot below to zoom it: " + test.addScreenCapture("../screenshots/" + result.getName() + "_" + result.getStartMillis() + ".png"));
+                } else if (result.getStatus() == ITestResult.SUCCESS) {
+                    test.log(LogStatus.PASS, "Click on the snapshot below to zoom it: " + test.addScreenCapture("../screenshots/" + result.getName() + "_" + result.getStartMillis() + ".png"));
                 }
                 /*for (String group : result.getMethod().getGroups())
                     test.assignCategory(group);*/

@@ -17,6 +17,7 @@ public class MainAddressPage extends BasePage {
     By previousButton = By.linkText("Back");
 
     public MainAddressPage enterMainAddressLine(String mainAddressLine) {
+        waitForElement(mainAddressLineTextBox).clear();
         waitForElement(mainAddressLineTextBox).sendKeys(mainAddressLine);
         return this;
     }
@@ -27,11 +28,13 @@ public class MainAddressPage extends BasePage {
     }
 
     public MainAddressPage enterMainAddressTownCity(String mainAddressTownCity) {
+        waitForElement(mainAddressTownCityTextBox).clear();
         waitForElement(mainAddressTownCityTextBox).sendKeys(mainAddressTownCity);
         return this;
     }
 
     public MainAddressPage enterMainAddressPostcode(String mainAddressPostcode) {
+        waitForElement(mainAddressPostcodeTextBox).clear();
         waitForElement(mainAddressPostcodeTextBox).sendKeys(mainAddressPostcode);
         return this;
     }
@@ -42,16 +45,19 @@ public class MainAddressPage extends BasePage {
     }
 
     public MainAddressPage enterCorrespondenceAddressLine(String correspondenceAddressLine) {
+        waitForElement(correspondenceAddressLineTextBox).clear();
         waitForElement(correspondenceAddressLineTextBox).sendKeys(correspondenceAddressLine);
         return this;
     }
 
     public MainAddressPage enterCorrespondenceTownCity(String correspondenceTownCity) {
+        waitForElement(correspondenceTownCityTextBox).clear();
         waitForElement(correspondenceTownCityTextBox).sendKeys(correspondenceTownCity);
         return this;
     }
 
     public MainAddressPage enterCorrespondencePostcode(String correspondencePostcode) {
+        waitForElement(correspondencePostcodeTextBox).clear();
         waitForElement(correspondencePostcodeTextBox).sendKeys(correspondencePostcode);
         return this;
     }
@@ -77,5 +83,9 @@ public class MainAddressPage extends BasePage {
         } catch (InstantiationException | IllegalAccessException ex) {
             throw new AssertionError("Unable to create a page for the generic class");
         }
+    }
+
+    public boolean isMainAddressPageLoad() {
+        return isElementPresent(mainAddressLineTextBox);
     }
 }

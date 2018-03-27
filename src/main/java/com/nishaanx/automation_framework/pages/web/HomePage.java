@@ -54,7 +54,7 @@ public class HomePage extends BasePage {
     }
 
     public boolean IsValidateButtonDisabled() {
-        return isElementPresent(validateDisabledButton);
+        return isElementPresent(validateDisabledButton, 5);
     }
 
     public <T extends BasePage> T clickValidate(Class<T> clazz) {

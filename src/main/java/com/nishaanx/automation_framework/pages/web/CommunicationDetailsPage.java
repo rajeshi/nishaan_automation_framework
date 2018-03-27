@@ -9,12 +9,17 @@ public class CommunicationDetailsPage extends BasePage {
     By nextButton = By.linkText("Next");
     By previousButton = By.linkText("Back");
 
+    public boolean isCommunicationDetailsPagePresent() {
+        return isElementPresent(emailTextBox);
+    }
     public CommunicationDetailsPage enterEmail(String email) {
+        waitForElement(emailTextBox).clear();
         waitForElement(emailTextBox).sendKeys(email);
         return this;
     }
 
     public CommunicationDetailsPage enterPhone(String phone) {
+        waitForElement(phoneTextBox).clear();
         waitForElement(phoneTextBox).sendKeys(phone);
         return this;
     }

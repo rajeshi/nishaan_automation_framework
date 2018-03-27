@@ -407,16 +407,19 @@ public class BasePage {
         try {
             wait.withTimeout(timeOut, TimeUnit.SECONDS)
                     .pollingEvery(2, TimeUnit.SECONDS)
-                    .until(new Function<WebDriver, Boolean>() {
-                        @Override
-                        public Boolean apply(WebDriver t) {
-                            try {
-                                return countElements(by) > 0;
-                            } catch (UnhandledAlertException ex) {
-                                t.switchTo().alert().accept();
-                                t.switchTo().defaultContent();
-                                return false;
+                    .until((WebDriver t) -> {
+                        try {
+                            boolean isPresent = false;
+                            if (countElements(by) > 0) {
+                                WebDriverWait wait1 = new WebDriverWait(driver, Configurations.TIME_OUT_SECONDS);
+                                WebElement element = wait1.until(ExpectedConditions.visibilityOfElementLocated(by));
+                                isPresent = element.isDisplayed();
                             }
+                            return isPresent;
+                        } catch (UnhandledAlertException ex) {
+                            t.switchTo().alert().accept();
+                            t.switchTo().defaultContent();
+                            return false;
                         }
                     });
             return true;

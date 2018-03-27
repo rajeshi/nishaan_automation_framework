@@ -15,6 +15,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 public class BaseTests extends Assert {
 
@@ -23,24 +24,22 @@ public class BaseTests extends Assert {
     @BeforeMethod
     public void setupTest() throws MalformedURLException {
         DriverFactory.createWebDriverInstance();
-        DriverFactory.getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        DriverFactory.getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        DriverFactory.getDriver().manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
     }
 
     @AfterMethod
     public void tearDownTest(ITestResult itr) throws IOException {
         if (DriverFactory.getDriver() == null) {
         } else {
-            DriverFactory.getHttpTraffic();
-            if (itr.isSuccess()) {
-            } else {
-                Screenshot screenshot = new AShot()
-                        .takeScreenshot(DriverFactory.getDriver());
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                File file = new File(System.getProperty("user.dir") + "");
-                File fileScr = new File(file.getAbsolutePath() + "/target/surefire-reports/screenshots/" + itr.getMethod().getMethodName() + "_" + itr.getStartMillis() + ".png");
-                ImageIO.write(screenshot.getImage(), "PNG", baos);
-                FileUtils.writeByteArrayToFile(fileScr, baos.toByteArray());
-            }
+            Screenshot screenshot = new AShot()
+                    .shootingStrategy(ShootingStrategies.viewportPasting(200))
+                    .takeScreenshot(DriverFactory.getDriver());
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            File file = new File(System.getProperty("user.dir") + "");
+            File fileScr = new File(file.getAbsolutePath() + "/target/surefire-reports/screenshots/" + itr.getMethod().getMethodName() + "_" + itr.getStartMillis() + ".png");
+            ImageIO.write(screenshot.getImage(), "PNG", baos);
+            FileUtils.writeByteArrayToFile(fileScr, baos.toByteArray());
         }
         DriverFactory.getDriver().quit();
     }

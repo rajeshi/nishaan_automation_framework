@@ -15,12 +15,12 @@ public class TermsAndConditionsPage extends BasePage {
         return this;
     }
 
-    public TermsAndConditionsPage checkoptinForNewsletterFromRcgp(boolean value) {
+    public TermsAndConditionsPage checkOptinForNewsletterFromRcgp(boolean value) {
         checkboxSelection(waitForElement(optinForNewsletterFromRcgpCheckBox), value);
         return this;
     }
 
-    public TermsAndConditionsPage checkagreeToTermsAndConditions(boolean value) {
+    public TermsAndConditionsPage checkAgreeToTermsAndConditions(boolean value) {
         checkboxSelection(waitForElement(agreeToTermsAndConditionsCheckBox), value);
         return this;
     }
@@ -41,5 +41,9 @@ public class TermsAndConditionsPage extends BasePage {
         } catch (InstantiationException | IllegalAccessException ex) {
             throw new AssertionError("Unable to create a page for the generic class");
         }
+    }
+
+    public boolean isTermsAndConditionsPagePresent() {
+        return isElementPresent(optinForNewsletterFromRcgpCheckBox);
     }
 }
