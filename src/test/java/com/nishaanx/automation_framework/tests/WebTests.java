@@ -3,6 +3,7 @@ package com.nishaanx.automation_framework.tests;
 import com.nishaanx.automation_framework.base.Configurations;
 import com.nishaanx.automation_framework.data.WorkflowInfo;
 import com.nishaanx.automation_framework.enums.WorkflowEnums;
+import com.nishaanx.automation_framework.pages.web.BasePage;
 import com.nishaanx.automation_framework.pages.web.CommunicationDetailsPage;
 import com.nishaanx.automation_framework.pages.web.HomePage;
 import com.nishaanx.automation_framework.pages.web.LoginPage;
@@ -15,6 +16,7 @@ import com.nishaanx.automation_framework.pages.web.TermsAndConditionsPage;
 import com.nishaanx.automation_framework.pages.web.TrainingDetailsPage;
 import com.nishaanx.automation_framework.workflow.NishaanxWorkflowImpl;
 import com.nishaanx.automation_framework.workflow.NishaanxWorkflows;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import org.testng.annotations.DataProvider;
@@ -28,10 +30,17 @@ public class WebTests extends BaseTests {
         HomePage homePage = nw.navigateToTheUrl(Configurations.URL);
 
         assertTrue(homePage.IsValidateButtonDisabled(), "Home Page is not loaded!!!");
-        LoginPage loginPage = nw.fillValidationInformation(homePage, workflowInfo.getValidationInfo());
+        BasePage page = nw.fillValidationInformation(homePage, workflowInfo.getValidationInfo());
 
-        assertTrue(loginPage.isLoginPageDisplayed(), "Login Page is not loaded!!!");
-        PersonalDetailsPage personalDetailsPage = nw.loginToTheSystem(loginPage, workflowInfo.getValidationInfo().getEmail(), "RCGP1234");
+        PersonalDetailsPage personalDetailsPage = null;
+
+        if (page instanceof LoginPage) {
+            LoginPage loginPage = (LoginPage) page;
+            assertTrue(loginPage.isLoginPageDisplayed(), "Login Page is not loaded!!!");
+            personalDetailsPage = nw.loginToTheSystem(loginPage, workflowInfo.getValidationInfo().getEmail(), "RCGP1234");
+        } else {
+            personalDetailsPage = (PersonalDetailsPage) page;
+        }
 
         assertTrue(personalDetailsPage.isPersonalDetailsPagePresent(), "Person Details Page is not loaded!!!");
         CommunicationDetailsPage communicationsDetailsPage = nw.enterPersonalDetails(personalDetailsPage, workflowInfo.getPersonalDetailsInfo());
@@ -40,7 +49,7 @@ public class WebTests extends BaseTests {
         MainAddressPage mainAddressPage = nw.enterCommunicationDetails(communicationsDetailsPage, workflowInfo.getCommunicationDetailsInfo());
 
         assertTrue(mainAddressPage.isMainAddressPageLoad(), "Main Address Page is not loaded!!!");
-        TrainingDetailsPage trainingDetailsPage = nw.enterMainAddressDetails(mainAddressPage, workflowInfo.getMainAddressInfo());
+        TrainingDetailsPage trainingDetailsPage = nw.enterMainAddressDetails(mainAddressPage, workflowInfo.getAddressDetailsInfo());
 
         assertTrue(trainingDetailsPage.isTrainingDetailsPagePresent(), "Training Details page is not present!!!");
         TermsAndConditionsPage termsAndConditonsPage = nw.enterTrainingDetails(trainingDetailsPage, workflowInfo.getTrainingDetailsInfo());
@@ -53,16 +62,20 @@ public class WebTests extends BaseTests {
 
         assertTrue(reviewPage.isNextStepButtonPresent(), "Review page not loaded!!!");
         PaymentLandingPage paymentLandingPage = reviewPage.clickNextStep();
+        paymentLandingPage.handledSleep(20);
 
         assertTrue(paymentLandingPage.isNextStepButtonPresent(), "Payment Landing Page is not loaded!!!");
         PaymentPage paymentPage = paymentLandingPage.clickNextStep(PaymentPage.class);
+        paymentPage.handledSleep(20);
 
         assertTrue(paymentPage.isPaymentPageDisplayed(), "Payment Page is not loaded!!!");
         paymentPage = nw.enterPaymentDetails(paymentPage, workflowInfo.getPaymentInfo());
+
+        paymentPage.handledSleep(20);
     }
 
     @DataProvider(name = "testData", parallel = false)
-    public static Object[][] getTestData() {
+    public static Object[][] getTestData() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         List<WorkflowInfo[]> workflows = new ArrayList<>();
         WorkflowEnums[] enums = WorkflowEnums.values();
         for (WorkflowEnums enum1 : enums) {

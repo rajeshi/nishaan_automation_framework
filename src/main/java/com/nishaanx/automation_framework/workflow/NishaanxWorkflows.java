@@ -7,6 +7,7 @@ import com.nishaanx.automation_framework.data.PersonalDetailsInfo;
 import com.nishaanx.automation_framework.data.TermsAndConditionsInfo;
 import com.nishaanx.automation_framework.data.TrainingDetailsInfo;
 import com.nishaanx.automation_framework.data.ValidationInfo;
+import com.nishaanx.automation_framework.pages.web.BasePage;
 import com.nishaanx.automation_framework.pages.web.CommunicationDetailsPage;
 import com.nishaanx.automation_framework.pages.web.HomePage;
 import com.nishaanx.automation_framework.pages.web.LoginPage;
@@ -21,7 +22,7 @@ public interface NishaanxWorkflows {
 
     public HomePage navigateToTheUrl(String url);
 
-    public LoginPage fillValidationInformation(HomePage homePage, ValidationInfo validationInfo);
+    public <T extends BasePage> T fillValidationInformation(HomePage homePage, ValidationInfo validationInfo);
 
     public PersonalDetailsPage loginToTheSystem(LoginPage loginPage, String username, String password);
 

@@ -4,7 +4,7 @@ public class PersonalDetailsInfo {
 
     private String title;
     private String forename;
-    private String lastname;
+    private String surname;
     private String dob;
     private String country;
     private String gender;
@@ -25,12 +25,12 @@ public class PersonalDetailsInfo {
         this.forename = forename;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getDob() {

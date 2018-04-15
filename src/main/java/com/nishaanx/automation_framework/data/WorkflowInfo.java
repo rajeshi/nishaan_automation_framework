@@ -5,7 +5,7 @@ public class WorkflowInfo {
     private ValidationInfo validationInfo;
     private PersonalDetailsInfo personalDetailsInfo;
     private CommunicationDetailsInfo communicationDetailsInfo;
-    private AddressDetailsInfo mainAddressInfo;
+    private AddressDetailsInfo addressDetailsInfo;
     private TrainingDetailsInfo trainingDetailsInfo;
     private TermsAndConditionsInfo termsAndConditionsInfo;
     private PaymentInfo paymentInfo;
@@ -42,12 +42,12 @@ public class WorkflowInfo {
         this.communicationDetailsInfo = communicationDetailsInfo;
     }
 
-    public AddressDetailsInfo getMainAddressInfo() {
-        return mainAddressInfo;
+    public AddressDetailsInfo getAddressDetailsInfo() {
+        return addressDetailsInfo;
     }
 
-    public void setMainAddressInfo(AddressDetailsInfo mainAddressInfo) {
-        this.mainAddressInfo = mainAddressInfo;
+    public void setAddressDetailsInfo(AddressDetailsInfo addressDetailsInfo) {
+        this.addressDetailsInfo = addressDetailsInfo;
     }
 
     public TrainingDetailsInfo getTrainingDetailsInfo() {

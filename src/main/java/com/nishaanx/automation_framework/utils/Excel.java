@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -177,5 +179,76 @@ public class Excel {
     public String getColumnDataByRowIndex(int rowIndex, String... columnName) {
         String[][] columnData = getExcelRecords(Res.getResource(((ExcelContext) context).getExcelFile()), columnName);
         return columnData[rowIndex][0];
+    }
+
+    public <T> List<T> getData(String[] columnNames, Class<T> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        List<T> neededRows = new ArrayList<>();
+        XSSFWorkbook workbook = getWorkbook(Res.getResource(((ExcelContext) context).getExcelFile()));
+        XSSFSheet sheet = null;
+        if (getSheetName() == null || getSheetName().isEmpty()) {
+            sheet = workbook.getSheetAt(0);
+        } else {
+            sheet = workbook.getSheet(getSheetName());
+        }
+        setRowOffset(sheet.getFirstRowNum());
+        setColumnOffset(sheet.getRow(getRowOffset()));
+        List<String> columnHeaders = getColumnHeaders(sheet);
+
+        List<Integer> neededIndexes = new ArrayList<>();
+
+        if (columnNames == null || columnNames.length == 0) {
+            for (int i = 0; i < columnHeaders.size(); ++i) {
+                neededIndexes.add(getColumnOffset() + i);
+            }
+        } else {
+            for (String neededName : columnNames) {
+                int neededIndex = columnHeaders.indexOf(neededName);
+                if (neededIndex < 0) {
+                    throw new RuntimeException("Column Name: \"" + neededName + "\" was not found in the excel");
+                }
+                neededIndexes.add(getColumnOffset() + Integer.valueOf(neededIndex));
+            }
+        }
+
+        int numNeededCols = neededIndexes.size();
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            XSSFRow row = (XSSFRow) rowIterator.next();
+            if (row.getRowNum() <= sheet.getFirstRowNum()) {
+            } else {
+                T obj = clazz.newInstance();
+                int rowCnt = 0;
+                for (int i = 0; i < numNeededCols; i++) {
+                    String headerName = sheet.getRow(sheet.getFirstRowNum()).getCell(rowOffset).getRichStringCellValue().toString();
+                    String cellValue = "";
+                    Cell cell = row.getCell(i);
+                    switch (cell.getCellType()) {
+                        case Cell.CELL_TYPE_BOOLEAN:
+                            cellValue = Boolean.toString(cell.getBooleanCellValue());
+                            break;
+                        case Cell.CELL_TYPE_NUMERIC:
+                            cellValue = Double.toString(cell.getNumericCellValue());
+                            break;
+                        case Cell.CELL_TYPE_STRING:
+                            cellValue = cell.getStringCellValue();
+                            if (cellValue.trim().equalsIgnoreCase("<<blank>>")) {
+                                cellValue = "";
+                            }
+                            break;
+                    }
+
+                    if (cellValue.isEmpty() || cellValue == null) {
+                    } else {
+                        for (Method method : obj.getClass().getDeclaredMethods()) {
+                            if (method.getName().startsWith("set") && method.getName().equals("set" + headerName)) {
+                                method.invoke(obj, cellValue);
+                            }
+                        }
+                    }
+                    neededRows.add(obj);
+                }
+            }
+        }
+        return neededRows;
     }
 }
