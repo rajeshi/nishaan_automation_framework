@@ -1,8 +1,8 @@
 package com.nishaanx.automation_framework.tests;
 
 import com.nishaanx.automation_framework.base.Configurations;
+import com.nishaanx.automation_framework.base.Res;
 import com.nishaanx.automation_framework.data.WorkflowInfo;
-import com.nishaanx.automation_framework.enums.WorkflowEnums;
 import com.nishaanx.automation_framework.pages.web.BasePage;
 import com.nishaanx.automation_framework.pages.web.CommunicationDetailsPage;
 import com.nishaanx.automation_framework.pages.web.HomePage;
@@ -14,9 +14,14 @@ import com.nishaanx.automation_framework.pages.web.PersonalDetailsPage;
 import com.nishaanx.automation_framework.pages.web.ReviewPage;
 import com.nishaanx.automation_framework.pages.web.TermsAndConditionsPage;
 import com.nishaanx.automation_framework.pages.web.TrainingDetailsPage;
+import com.nishaanx.automation_framework.utils.Excel;
+import com.nishaanx.automation_framework.utils.ExcelContext;
 import com.nishaanx.automation_framework.workflow.NishaanxWorkflowImpl;
 import com.nishaanx.automation_framework.workflow.NishaanxWorkflows;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import org.testng.annotations.DataProvider;
@@ -75,15 +80,16 @@ public class WebTests extends BaseTests {
     }
 
     @DataProvider(name = "testData", parallel = false)
-    public static Object[][] getTestData() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public static Object[][] getTestData() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IOException, FileNotFoundException, NoSuchMethodException, URISyntaxException {
+        ExcelContext context = new ExcelContext();
+        Excel excel = new Excel(context);
         List<WorkflowInfo[]> workflows = new ArrayList<>();
-        WorkflowEnums[] enums = WorkflowEnums.values();
-        for (WorkflowEnums enum1 : enums) {
+        List<WorkflowInfo> workflowList = excel.getWorkflowData(Res.getResource("testData/Web.xlsx").toURI());
+        for (WorkflowInfo workflow : workflowList) {
             WorkflowInfo[] workflowInfo = new WorkflowInfo[1];
-            workflowInfo[0] = enum1.getData();
+            workflowInfo[0] = workflow;
             workflows.add(workflowInfo);
         }
-
-        return workflows.toArray(new WorkflowInfo[enums.length][]);
+        return workflows.toArray(new WorkflowInfo[workflowList.size()][]);
     }
 }

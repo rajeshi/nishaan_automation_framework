@@ -1,6 +1,6 @@
 package com.nishaanx.automation_framework.data;
 
-public class CommunicationDetailsInfo {
+public class CommunicationInfo {
 
     private String email;
     private String phone;

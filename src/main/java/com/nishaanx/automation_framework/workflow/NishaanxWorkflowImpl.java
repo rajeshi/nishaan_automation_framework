@@ -1,8 +1,8 @@
 package com.nishaanx.automation_framework.workflow;
 
 import com.nishaanx.automation_framework.base.DriverFactory;
-import com.nishaanx.automation_framework.data.AddressDetailsInfo;
-import com.nishaanx.automation_framework.data.CommunicationDetailsInfo;
+import com.nishaanx.automation_framework.data.AddressInfo;
+import com.nishaanx.automation_framework.data.CommunicationInfo;
 import com.nishaanx.automation_framework.data.PaymentInfo;
 import com.nishaanx.automation_framework.data.PersonalDetailsInfo;
 import com.nishaanx.automation_framework.data.TermsAndConditionsInfo;
@@ -81,14 +81,14 @@ public class NishaanxWorkflowImpl implements NishaanxWorkflows {
     }
 
     @Override
-    public MainAddressPage enterCommunicationDetails(CommunicationDetailsPage communicationDetailsPage, CommunicationDetailsInfo communicationDetailsInfo) {
+    public MainAddressPage enterCommunicationDetails(CommunicationDetailsPage communicationDetailsPage, CommunicationInfo communicationDetailsInfo) {
         return communicationDetailsPage.enterEmail(communicationDetailsInfo.getEmail())
                 .enterPhone(communicationDetailsInfo.getPhone())
                 .clickNext(MainAddressPage.class);
     }
 
     @Override
-    public TrainingDetailsPage enterMainAddressDetails(MainAddressPage mainAddressPage, AddressDetailsInfo mainAddressInfo) {
+    public TrainingDetailsPage enterMainAddressDetails(MainAddressPage mainAddressPage, AddressInfo mainAddressInfo) {
         mainAddressPage = mainAddressPage.enterMainAddressLine(mainAddressInfo.getAddressLine())
                 .enterMainAddressTownCity(mainAddressInfo.getTownCity())
                 .enterMainAddressPostcode(mainAddressInfo.getPostCode())

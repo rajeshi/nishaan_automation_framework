@@ -1,7 +1,7 @@
 package com.nishaanx.automation_framework.enums;
 
-import com.nishaanx.automation_framework.data.AddressDetailsInfo;
-import com.nishaanx.automation_framework.data.CommunicationDetailsInfo;
+import com.nishaanx.automation_framework.data.AddressInfo;
+import com.nishaanx.automation_framework.data.CommunicationInfo;
 import com.nishaanx.automation_framework.data.PaymentInfo;
 import com.nishaanx.automation_framework.data.PersonalDetailsInfo;
 import com.nishaanx.automation_framework.data.TermsAndConditionsInfo;
@@ -28,11 +28,11 @@ public enum WorkflowEnums implements Supplier<WorkflowInfo> {
             personalDetailsInfo.setCountry("United Kingdom");
             personalDetailsInfo.setGender("Male");
 
-            CommunicationDetailsInfo communicationInfo = new CommunicationDetailsInfo();
+            CommunicationInfo communicationInfo = new CommunicationInfo();
             communicationInfo.setEmail("SebastianKnowles@dayrep.com");
             communicationInfo.setPhone("07819994850");
 
-            AddressDetailsInfo addressDetailsInfo = new AddressDetailsInfo();
+            AddressInfo addressDetailsInfo = new AddressInfo();
             addressDetailsInfo.setAddressLine("40 Cefn Road");
             addressDetailsInfo.setTownCity("Farningham");
             addressDetailsInfo.setPostCode("DA4 9XX");
@@ -87,11 +87,11 @@ public enum WorkflowEnums implements Supplier<WorkflowInfo> {
             personalDetailsInfo.setCountry("Brazil");
             personalDetailsInfo.setGender("Prefer not to say");
 
-            CommunicationDetailsInfo communicationInfo = new CommunicationDetailsInfo();
+            CommunicationInfo communicationInfo = new CommunicationInfo();
             communicationInfo.setEmail("NicoleVincent@einrot.com");
             communicationInfo.setPhone("07969109157");
 
-            AddressDetailsInfo addressDetailsInfo = new AddressDetailsInfo();
+            AddressInfo addressDetailsInfo = new AddressInfo();
             addressDetailsInfo.setAddressLine("92 Fulford Road");
             addressDetailsInfo.setTownCity("Pentre-tafarn-y-fedw");
             addressDetailsInfo.setPostCode("LL26 9GZ");
@@ -145,11 +145,11 @@ public enum WorkflowEnums implements Supplier<WorkflowInfo> {
             personalDetailsInfo.setCountry("United Kingdom");
             personalDetailsInfo.setGender("Prefer not to say");
 
-            CommunicationDetailsInfo communicationInfo = new CommunicationDetailsInfo();
+            CommunicationInfo communicationInfo = new CommunicationInfo();
             communicationInfo.setEmail("LeoSimmons@teleworm.us");
             communicationInfo.setPhone("07034756031");
 
-            AddressDetailsInfo addressDetailsInfo = new AddressDetailsInfo();
+            AddressInfo addressDetailsInfo = new AddressInfo();
             addressDetailsInfo.setAddressLine("23 Botley Road");
             addressDetailsInfo.setTownCity("Middleton green");
             addressDetailsInfo.setPostCode("ST10 0GE");
@@ -194,8 +194,8 @@ public enum WorkflowEnums implements Supplier<WorkflowInfo> {
             WorkflowInfo workflowInfo = new WorkflowInfo();
             ValidationInfo validationInfo = new ValidationInfo();
             PersonalDetailsInfo personalDetailsInfo = new PersonalDetailsInfo();
-            CommunicationDetailsInfo communicationInfo = new CommunicationDetailsInfo();
-            AddressDetailsInfo addressInfo = new AddressDetailsInfo();
+            CommunicationInfo communicationInfo = new CommunicationInfo();
+            AddressInfo addressInfo = new AddressInfo();
             TrainingDetailsInfo trainingDetailsInfo = new TrainingDetailsInfo();
             TermsAndConditionsInfo termsAndConditionsInfo = new TermsAndConditionsInfo();
             PaymentInfo paymentInfo = new PaymentInfo();
@@ -252,8 +252,8 @@ public enum WorkflowEnums implements Supplier<WorkflowInfo> {
             WorkflowInfo workflowInfo = new WorkflowInfo();
             ValidationInfo validationInfo = new ValidationInfo();
             PersonalDetailsInfo personalDetailsInfo = new PersonalDetailsInfo();
-            CommunicationDetailsInfo communicationInfo = new CommunicationDetailsInfo();
-            AddressDetailsInfo addressInfo = new AddressDetailsInfo();
+            CommunicationInfo communicationInfo = new CommunicationInfo();
+            AddressInfo addressInfo = new AddressInfo();
             TrainingDetailsInfo trainingDetailsInfo = new TrainingDetailsInfo();
             TermsAndConditionsInfo termsAndConditionsInfo = new TermsAndConditionsInfo();
             PaymentInfo paymentInfo = new PaymentInfo();
@@ -315,8 +315,8 @@ public enum WorkflowEnums implements Supplier<WorkflowInfo> {
             WorkflowInfo workflowInfo = new WorkflowInfo();
             ValidationInfo validationInfo = new ValidationInfo();
             PersonalDetailsInfo personalDetailsInfo = new PersonalDetailsInfo();
-            CommunicationDetailsInfo communicationInfo = new CommunicationDetailsInfo();
-            AddressDetailsInfo addressInfo = new AddressDetailsInfo();
+            CommunicationInfo communicationInfo = new CommunicationInfo();
+            AddressInfo addressInfo = new AddressInfo();
             TrainingDetailsInfo trainingDetailsInfo = new TrainingDetailsInfo();
             TermsAndConditionsInfo termsAndConditionsInfo = new TermsAndConditionsInfo();
             PaymentInfo paymentInfo = new PaymentInfo();
@@ -377,8 +377,8 @@ public enum WorkflowEnums implements Supplier<WorkflowInfo> {
             WorkflowInfo workflowInfo = new WorkflowInfo();
             ValidationInfo validationInfo = new ValidationInfo();
             PersonalDetailsInfo personalDetailsInfo = new PersonalDetailsInfo();
-            CommunicationDetailsInfo communicationInfo = new CommunicationDetailsInfo();
-            AddressDetailsInfo addressInfo = new AddressDetailsInfo();
+            CommunicationInfo communicationInfo = new CommunicationInfo();
+            AddressInfo addressInfo = new AddressInfo();
             TrainingDetailsInfo trainingDetailsInfo = new TrainingDetailsInfo();
             TermsAndConditionsInfo termsAndConditionsInfo = new TermsAndConditionsInfo();
             PaymentInfo paymentInfo = new PaymentInfo();
@@ -439,8 +439,8 @@ public enum WorkflowEnums implements Supplier<WorkflowInfo> {
             WorkflowInfo workflowInfo = new WorkflowInfo();
             ValidationInfo validationInfo = new ValidationInfo();
             PersonalDetailsInfo personalDetailsInfo = new PersonalDetailsInfo();
-            CommunicationDetailsInfo communicationInfo = new CommunicationDetailsInfo();
-            AddressDetailsInfo addressInfo = new AddressDetailsInfo();
+            CommunicationInfo communicationInfo = new CommunicationInfo();
+            AddressInfo addressInfo = new AddressInfo();
             TrainingDetailsInfo trainingDetailsInfo = new TrainingDetailsInfo();
             TermsAndConditionsInfo termsAndConditionsInfo = new TermsAndConditionsInfo();
             PaymentInfo paymentInfo = new PaymentInfo();
@@ -501,8 +501,8 @@ public enum WorkflowEnums implements Supplier<WorkflowInfo> {
             WorkflowInfo workflowInfo = new WorkflowInfo();
             ValidationInfo validationInfo = new ValidationInfo();
             PersonalDetailsInfo personalDetailsInfo = new PersonalDetailsInfo();
-            CommunicationDetailsInfo communicationInfo = new CommunicationDetailsInfo();
-            AddressDetailsInfo addressInfo = new AddressDetailsInfo();
+            CommunicationInfo communicationInfo = new CommunicationInfo();
+            AddressInfo addressInfo = new AddressInfo();
             TrainingDetailsInfo trainingDetailsInfo = new TrainingDetailsInfo();
             TermsAndConditionsInfo termsAndConditionsInfo = new TermsAndConditionsInfo();
             PaymentInfo paymentInfo = new PaymentInfo();

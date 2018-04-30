@@ -1,7 +1,7 @@
 package com.nishaanx.automation_framework.workflow;
 
-import com.nishaanx.automation_framework.data.AddressDetailsInfo;
-import com.nishaanx.automation_framework.data.CommunicationDetailsInfo;
+import com.nishaanx.automation_framework.data.AddressInfo;
+import com.nishaanx.automation_framework.data.CommunicationInfo;
 import com.nishaanx.automation_framework.data.PaymentInfo;
 import com.nishaanx.automation_framework.data.PersonalDetailsInfo;
 import com.nishaanx.automation_framework.data.TermsAndConditionsInfo;
@@ -28,9 +28,9 @@ public interface NishaanxWorkflows {
 
     public CommunicationDetailsPage enterPersonalDetails(PersonalDetailsPage personalDetailsPage, PersonalDetailsInfo personalDetailsInfo);
 
-    public MainAddressPage enterCommunicationDetails(CommunicationDetailsPage communicationDetailsPage, CommunicationDetailsInfo communicationDetailsInfo);
+    public MainAddressPage enterCommunicationDetails(CommunicationDetailsPage communicationDetailsPage, CommunicationInfo communicationDetailsInfo);
 
-    public TrainingDetailsPage enterMainAddressDetails(MainAddressPage mainAddressPage, AddressDetailsInfo mainAddressInfo);
+    public TrainingDetailsPage enterMainAddressDetails(MainAddressPage mainAddressPage, AddressInfo mainAddressInfo);
 
     public TermsAndConditionsPage enterTrainingDetails(TrainingDetailsPage trainingDetailsPage, TrainingDetailsInfo trainingDetailsInfo);
 

@@ -1,6 +1,6 @@
 package com.nishaanx.automation_framework.data;
 
-public class AddressDetailsInfo {
+public class AddressInfo {
 
     String addressLine;
     String townCity;

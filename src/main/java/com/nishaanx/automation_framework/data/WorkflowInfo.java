@@ -4,8 +4,8 @@ public class WorkflowInfo {
 
     private ValidationInfo validationInfo;
     private PersonalDetailsInfo personalDetailsInfo;
-    private CommunicationDetailsInfo communicationDetailsInfo;
-    private AddressDetailsInfo addressDetailsInfo;
+    private CommunicationInfo communicationDetailsInfo;
+    private AddressInfo addressDetailsInfo;
     private TrainingDetailsInfo trainingDetailsInfo;
     private TermsAndConditionsInfo termsAndConditionsInfo;
     private PaymentInfo paymentInfo;
@@ -34,19 +34,19 @@ public class WorkflowInfo {
         this.personalDetailsInfo = personalDetailsInfo;
     }
 
-    public CommunicationDetailsInfo getCommunicationDetailsInfo() {
+    public CommunicationInfo getCommunicationDetailsInfo() {
         return communicationDetailsInfo;
     }
 
-    public void setCommunicationDetailsInfo(CommunicationDetailsInfo communicationDetailsInfo) {
+    public void setCommunicationDetailsInfo(CommunicationInfo communicationDetailsInfo) {
         this.communicationDetailsInfo = communicationDetailsInfo;
     }
 
-    public AddressDetailsInfo getAddressDetailsInfo() {
+    public AddressInfo getAddressDetailsInfo() {
         return addressDetailsInfo;
     }
 
-    public void setAddressDetailsInfo(AddressDetailsInfo addressDetailsInfo) {
+    public void setAddressDetailsInfo(AddressInfo addressDetailsInfo) {
         this.addressDetailsInfo = addressDetailsInfo;
     }
 

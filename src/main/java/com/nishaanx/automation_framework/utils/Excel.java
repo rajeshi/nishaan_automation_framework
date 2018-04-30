@@ -1,19 +1,25 @@
 package com.nishaanx.automation_framework.utils;
 
 import com.nishaanx.automation_framework.base.Res;
+import com.nishaanx.automation_framework.data.WorkflowInfo;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -250,5 +256,83 @@ public class Excel {
             }
         }
         return neededRows;
+    }
+
+    public List<WorkflowInfo> getWorkflowData(URI filePath) throws FileNotFoundException, IOException, ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+        File file = new File(filePath);
+
+        FileInputStream fis = new FileInputStream(file);
+        Workbook wb = new XSSFWorkbook(fis);
+        List<WorkflowInfo> workflows = new ArrayList<>();
+        List<Integer> allRowsInEachSheet = new ArrayList<>();
+        for (int i = 0; i < wb.getNumberOfSheets(); i++) {
+            Sheet sheet = wb.getSheetAt(i);
+            allRowsInEachSheet.add(sheet.getPhysicalNumberOfRows());
+        }
+
+        int maxRows = Collections.max(allRowsInEachSheet);
+        for (int i = 2; i < maxRows; i++) {
+            WorkflowInfo workflowInfo = new WorkflowInfo();
+            for (int j = 0; j < wb.getNumberOfSheets(); j++) {
+                Sheet sheet = wb.getSheetAt(j);
+                String sheetName = sheet.getSheetName();
+                String pkg = "com.nishaanx.automation_framework.data.";
+                Class<?> clazz = Class.forName(pkg + sheetName.replace("Data", ""));
+                for (Method method : WorkflowInfo.class.getDeclaredMethods()) {
+                    if (method.getName().startsWith("get") || method.getName().startsWith("is")) {
+                        if (method.getReturnType().isAssignableFrom(clazz)) {
+                            Class<?> innerClass = method.getReturnType();
+                            Object innerClassInstance = innerClass.newInstance();
+                            for (Method m : innerClass.getMethods()) {
+                                if (m.getName().startsWith("set")) {
+                                    Row rowHeader = sheet.getRow(1);
+                                    for (int k = 1; k <= rowHeader.getPhysicalNumberOfCells(); k++) {
+                                        Cell cell = (Cell) sheet.getRow(i).getCell(k);
+                                        String methodName = m.getName().replace("set", "");
+                                        System.out.println(methodName);
+                                        if (methodName.equals(rowHeader.getCell(k).getStringCellValue().trim())) {
+                                            String cellValue = "";
+                                            if (cell == null) {
+                                                cellValue = "";
+                                            } else {
+                                                switch (cell.getCellTypeEnum()) {
+                                                    case BOOLEAN:
+                                                        cellValue = Boolean.toString(cell.getBooleanCellValue());
+                                                        break;
+                                                    case NUMERIC:
+                                                        cell.setCellType(CellType.STRING);
+                                                        cellValue = cell.getStringCellValue();
+                                                        break;
+                                                    case STRING:
+                                                        cellValue = cell.getStringCellValue();
+                                                        if (cellValue.trim().equalsIgnoreCase("<<blank>>")) {
+                                                            cellValue = "";
+                                                        }
+                                                        break;
+                                                    default:
+                                                        cell.setCellType(CellType.STRING);
+                                                        cellValue = cell.getStringCellValue();
+                                                }
+                                            }
+                                            if (m.getParameterTypes()[0].equals(Boolean.TYPE)) {
+                                                m.invoke(innerClassInstance, Boolean.valueOf(cellValue));
+                                            } else {
+                                                m.invoke(innerClassInstance, m.getParameterTypes()[0].cast(cellValue));
+                                            }
+                                            System.out.println(rowHeader.getCell(k).getStringCellValue() + "==" + cellValue);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            Method setterMethod = WorkflowInfo.class.getMethod("set" + method.getName().replace("get", "").replace("is", ""), method.getReturnType());
+                            setterMethod.invoke(workflowInfo, (Object) innerClassInstance);
+                        }
+                    }
+                }
+            }
+            workflows.add(workflowInfo);
+        }
+        return workflows;
     }
 }
