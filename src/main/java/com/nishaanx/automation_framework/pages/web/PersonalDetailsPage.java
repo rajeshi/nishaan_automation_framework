@@ -76,7 +76,8 @@ public class PersonalDetailsPage extends BasePage {
     }
 
     public PersonalDetailsPage selectGender(String gender) {
-        selectItemByText(waitForElement(genderSelectBox), gender);
+        String updatedGender = gender.substring(0, 1).toUpperCase() + gender.substring(1);
+        selectItemByText(waitForElement(genderSelectBox), updatedGender);
         return this;
     }
 

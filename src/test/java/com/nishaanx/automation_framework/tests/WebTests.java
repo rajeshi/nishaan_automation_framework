@@ -90,6 +90,6 @@ public class WebTests extends BaseTests {
             workflowInfo[0] = workflow;
             workflows.add(workflowInfo);
         }
-        return workflows.toArray(new WorkflowInfo[workflowList.size()][]);
+        return workflows.subList(0, 1).toArray(new WorkflowInfo[1][]);
     }
 }

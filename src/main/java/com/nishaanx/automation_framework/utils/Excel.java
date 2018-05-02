@@ -11,12 +11,18 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CellValue;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -276,6 +282,9 @@ public class Excel {
             for (int j = 0; j < wb.getNumberOfSheets(); j++) {
                 Sheet sheet = wb.getSheetAt(j);
                 String sheetName = sheet.getSheetName();
+                if (sheetName.contains("MasterData")) {
+                    continue;
+                }
                 String pkg = "com.nishaanx.automation_framework.data.";
                 Class<?> clazz = Class.forName(pkg + sheetName.replace("Data", ""));
                 for (Method method : WorkflowInfo.class.getDeclaredMethods()) {
@@ -295,6 +304,7 @@ public class Excel {
                                             if (cell == null) {
                                                 cellValue = "";
                                             } else {
+                                                //cell.setCellType(CellType.STRING);
                                                 switch (cell.getCellTypeEnum()) {
                                                     case BOOLEAN:
                                                         cellValue = Boolean.toString(cell.getBooleanCellValue());
@@ -309,13 +319,35 @@ public class Excel {
                                                             cellValue = "";
                                                         }
                                                         break;
+                                                    case FORMULA:
+                                                        FormulaEvaluator eval = wb.getCreationHelper().createFormulaEvaluator();
+                                                        CellValue cv = eval.evaluate(cell);
+                                                        switch (cv.getCellTypeEnum()) {
+                                                            case NUMERIC:
+                                                                if (HSSFDateUtil.isCellDateFormatted(cell)) {
+                                                                    DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                                                                    Date date = HSSFDateUtil.getJavaDate(cv.getNumberValue());
+                                                                    cellValue = df.format(date);
+                                                                } else {
+                                                                    cellValue = String.valueOf(cv.getNumberValue()).replace(".0", "");
+                                                                }
+                                                                break;
+                                                            default:
+                                                                cellValue = cv.getStringValue();
+                                                                break;
+                                                        }
+                                                        break;
                                                     default:
                                                         cell.setCellType(CellType.STRING);
                                                         cellValue = cell.getStringCellValue();
                                                 }
                                             }
                                             if (m.getParameterTypes()[0].equals(Boolean.TYPE)) {
-                                                m.invoke(innerClassInstance, Boolean.valueOf(cellValue));
+                                                if (cellValue.trim().equalsIgnoreCase("Yes")) {
+                                                    m.invoke(innerClassInstance, true);
+                                                } else {
+                                                    m.invoke(innerClassInstance, false);
+                                                }
                                             } else {
                                                 m.invoke(innerClassInstance, m.getParameterTypes()[0].cast(cellValue));
                                             }

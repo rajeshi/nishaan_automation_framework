@@ -49,6 +49,6 @@ public class BaseTests extends Assert {
             FileUtils.writeByteArrayToFile(fileScr, baos.toByteArray());
         }
         //VideoCapture.stopRecording();
-        DriverFactory.getDriver().quit();
+        //DriverFactory.getDriver().quit();
     }
 }

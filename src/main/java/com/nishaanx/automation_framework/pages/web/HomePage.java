@@ -43,7 +43,7 @@ public class HomePage extends BasePage {
     }
 
     public boolean isContinueButtonDisplayed() {
-        return isElementPresent(continueButton);
+        return isElementPresent(continueButton, 5);
     }
 
     public HomePage enterLastName(String lastName) {
@@ -57,7 +57,7 @@ public class HomePage extends BasePage {
     }
 
     public boolean isFirstNameTextBoxEnabled() {
-        return isElementPresent(firstNameTextBox);
+        return isElementPresent(firstNameTextBox, 5);
     }
 
     public HomePage enterEmail(String email) {

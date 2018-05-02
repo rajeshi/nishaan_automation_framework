@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
  */
 public class LoginPage extends BasePage {
 
-    By username = By.xpath("//input[@type='text' and preceding-sibling::label[text()='Username']]");
+    By username = By.xpath("//input[@type='text' and preceding-sibling::label[text()='Email']]");
     By password = By.xpath("//input[@type='password' and preceding-sibling::label[text()='Password']]");
     By submit = By.xpath("//input[@value='Login']");
 
