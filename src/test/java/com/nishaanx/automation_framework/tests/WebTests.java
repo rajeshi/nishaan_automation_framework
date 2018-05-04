@@ -79,7 +79,7 @@ public class WebTests extends BaseTests {
         paymentPage.handledSleep(20);
     }
 
-    @DataProvider(name = "testData", parallel = false)
+    @DataProvider(name = "testData", parallel = true)
     public static Object[][] getTestData() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IOException, FileNotFoundException, NoSuchMethodException, URISyntaxException {
         ExcelContext context = new ExcelContext();
         Excel excel = new Excel(context);
